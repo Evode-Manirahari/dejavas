@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
   Mail, 
   MailOpen, 
   Reply, 
   Archive, 
-  Star, 
-  Filter,
   Search,
   Volume2,
   Play,
@@ -25,7 +23,6 @@ export const EmailIntegration: React.FC<EmailIntegrationProps> = ({
   onEmailsUpdate,
 }) => {
   const [selectedEmail, setSelectedEmail] = useState<EmailMessage | null>(null);
-  const [isReading, setIsReading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [filter, setFilter] = useState<'all' | 'unread' | 'high'>('all');
   const [isPlaying, setIsPlaying] = useState(false);
@@ -74,10 +71,6 @@ export const EmailIntegration: React.FC<EmailIntegrationProps> = ({
     }
   };
 
-  const stopReading = () => {
-    speechSynthesis.cancel();
-    setIsPlaying(false);
-  };
 
   const summarizeEmails = () => {
     const unreadEmails = emails.filter(email => !email.is_read);

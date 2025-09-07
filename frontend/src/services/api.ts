@@ -77,12 +77,12 @@ export const emailApi = {
     ];
   },
 
-  markAsRead: async (emailId: string) => {
+  markAsRead: async (_emailId: string) => {
     // Mock implementation
     return { success: true };
   },
 
-  respondToEmail: async (emailId: string, response: string) => {
+  respondToEmail: async (_emailId: string, _response: string) => {
     // Mock implementation
     return { success: true, message: 'Response sent successfully' };
   },
@@ -112,12 +112,12 @@ export const calendarApi = {
     ];
   },
 
-  addEvent: async (event: Omit<CalendarEvent, 'id'>) => {
+  addEvent: async (_event: Omit<CalendarEvent, 'id'>) => {
     // Mock implementation
     return { success: true, id: Math.random().toString(36).substr(2, 9) };
   },
 
-  cancelEvent: async (eventId: string) => {
+  cancelEvent: async (_eventId: string) => {
     // Mock implementation
     return { success: true };
   },

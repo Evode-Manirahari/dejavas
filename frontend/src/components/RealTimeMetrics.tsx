@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  BarChart3, 
   TrendingUp, 
   Users, 
   Activity, 
@@ -10,7 +9,7 @@ import {
   CheckCircle
 } from 'lucide-react';
 import { SimulationResult } from '../types';
-import { LineChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { motion } from 'framer-motion';
 
 interface RealTimeMetricsProps {

@@ -5,10 +5,7 @@ import {
   Users, 
   Mail, 
   Calendar, 
-  Play, 
   Settings,
-  TrendingUp,
-  AlertCircle,
   CheckCircle
 } from 'lucide-react';
 import { VoiceInterface } from './VoiceInterface';
@@ -18,7 +15,7 @@ import { EmailIntegration } from './EmailIntegration';
 import { CalendarIntegration } from './CalendarIntegration';
 import { RealTimeMetrics } from './RealTimeMetrics';
 import { ColorPreview } from './ColorPreview';
-import { simulationApi, emailApi, calendarApi } from '../services/api';
+import { emailApi, calendarApi } from '../services/api';
 import { SimulationResult, EmailMessage, CalendarEvent } from '../types';
 
 export const Dashboard: React.FC = () => {
@@ -26,14 +23,12 @@ export const Dashboard: React.FC = () => {
   const [simulationResults, setSimulationResults] = useState<SimulationResult[]>([]);
   const [emails, setEmails] = useState<EmailMessage[]>([]);
   const [events, setEvents] = useState<CalendarEvent[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     loadInitialData();
   }, []);
 
   const loadInitialData = async () => {
-    setIsLoading(true);
     try {
       const [emailsData, eventsData] = await Promise.all([
         emailApi.getUnreadEmails(),
@@ -43,8 +38,6 @@ export const Dashboard: React.FC = () => {
       setEvents(eventsData);
     } catch (error) {
       console.error('Failed to load initial data:', error);
-    } finally {
-      setIsLoading(false);
     }
   };
 

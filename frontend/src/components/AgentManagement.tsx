@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { 
   Users, 
   Plus, 
-  Edit, 
   Trash2, 
   Eye, 
-  Settings,
   Brain,
   Target,
   MessageSquare,

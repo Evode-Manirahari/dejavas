@@ -8,7 +8,7 @@ interface VoiceState {
 }
 
 interface VoiceCommands {
-  [key: string]: () => void;
+  [key: string]: (() => void) | undefined;
 }
 
 export const useVoice = (commands: VoiceCommands = {}) => {
@@ -19,7 +19,7 @@ export const useVoice = (commands: VoiceCommands = {}) => {
     error: null,
   });
 
-  const [recognition, setRecognition] = useState<SpeechRecognition | null>(null);
+  const [recognition, setRecognition] = useState<any | null>(null);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -35,7 +35,7 @@ export const useVoice = (commands: VoiceCommands = {}) => {
           setState(prev => ({ ...prev, isListening: true, error: null }));
         };
 
-        recognitionInstance.onresult = (event) => {
+        recognitionInstance.onresult = (event: any) => {
           let finalTranscript = '';
           let interimTranscript = '';
 
@@ -59,7 +59,7 @@ export const useVoice = (commands: VoiceCommands = {}) => {
           }
         };
 
-        recognitionInstance.onerror = (event) => {
+        recognitionInstance.onerror = (event: any) => {
           setState(prev => ({
             ...prev,
             error: `Speech recognition error: ${event.error}`,
@@ -136,7 +136,7 @@ export const useVoice = (commands: VoiceCommands = {}) => {
 // Extend Window interface for TypeScript
 declare global {
   interface Window {
-    SpeechRecognition: typeof SpeechRecognition;
-    webkitSpeechRecognition: typeof SpeechRecognition;
+    SpeechRecognition: any;
+    webkitSpeechRecognition: any;
   }
 }

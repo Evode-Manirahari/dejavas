@@ -4,11 +4,7 @@ import {
   Upload, 
   Settings, 
   BarChart3, 
-  Download,
-  RefreshCw,
-  AlertCircle,
-  CheckCircle,
-  TrendingUp
+  RefreshCw
 } from 'lucide-react';
 import { simulationApi, contentApi } from '../services/api';
 import { Brief, SimulationResult, SimulationConfig } from '../types';
@@ -79,7 +75,7 @@ export const SimulationPanel: React.FC<SimulationPanelProps> = ({
 
     setIsRunning(true);
     try {
-      const response = await simulationApi.runSimulation(currentSession);
+      await simulationApi.runSimulation(currentSession);
       const report = await simulationApi.getReport(currentSession);
       onResultsUpdate([report, ...results]);
       alert('Simulation completed successfully!');

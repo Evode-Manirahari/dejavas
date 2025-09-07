@@ -1,9 +1,8 @@
 import React from 'react';
-import { Mic, MicOff, Volume2, VolumeX } from 'lucide-react';
+import { Mic, MicOff, Volume2 } from 'lucide-react';
 import { useVoice } from '../hooks/useVoice';
 
 interface VoiceInterfaceProps {
-  onCommand?: (command: string) => void;
   onStartSimulation?: () => void;
   onAnalyzeContent?: () => void;
   onReadEmails?: () => void;
@@ -13,7 +12,6 @@ interface VoiceInterfaceProps {
 }
 
 export const VoiceInterface: React.FC<VoiceInterfaceProps> = ({
-  onCommand,
   onStartSimulation,
   onAnalyzeContent,
   onReadEmails,

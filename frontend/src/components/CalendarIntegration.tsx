@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
   Calendar, 
   Plus, 
@@ -118,23 +118,12 @@ export const CalendarIntegration: React.FC<CalendarIntegrationProps> = ({
     }
   };
 
-  const stopReading = () => {
-    speechSynthesis.cancel();
-    setIsReading(false);
-  };
-
   const formatTime = (dateString: string) => {
     return new Date(dateString).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString();
-  };
-
-  const isToday = (dateString: string) => {
-    const today = new Date();
-    const eventDate = new Date(dateString);
-    return today.toDateString() === eventDate.toDateString();
   };
 
   const upcomingEvents = events.filter(event => new Date(event.start) >= new Date()).sort((a, b) => 
