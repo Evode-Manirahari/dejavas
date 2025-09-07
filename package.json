@@ -1,0 +1,17 @@
+{
+  "name": "dejavas",
+  "version": "1.0.0",
+  "description": "AI Marketing Intelligence Platform",
+  "private": true,
+  "scripts": {
+    "build": "cd frontend && npm install && npm run build",
+    "dev": "cd frontend && npm install && npm run dev",
+    "start": "cd frontend && npm run preview"
+  },
+  "workspaces": [
+    "frontend"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
