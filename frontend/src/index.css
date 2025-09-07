@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  body {
+    @apply bg-neutral-50 text-neutral-800;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 shadow-sm;
+  }
+  
+  .btn-secondary {
+    @apply bg-secondary-200 hover:bg-secondary-300 text-secondary-800 font-medium py-2 px-4 rounded-lg transition-colors duration-200 shadow-sm;
+  }
+  
+  .btn-accent {
+    @apply bg-accent-500 hover:bg-accent-600 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 shadow-sm;
+  }
+  
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-secondary-200 p-6;
+  }
+  
+  .card-beige {
+    @apply bg-secondary-50 rounded-xl shadow-sm border border-secondary-200 p-6;
+  }
+  
+  .input-field {
+    @apply w-full px-3 py-2 border border-secondary-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white;
+  }
+  
+  .voice-pulse {
+    @apply animate-pulse-slow;
+  }
+  
+  .gradient-bg {
+    background: linear-gradient(135deg, #0ea5e9 0%, #22c55e 100%);
+  }
+  
+  .gradient-beige {
+    background: linear-gradient(135deg, #fdf6e3 0%, #e6d3a3 100%);
+  }
+  
+  .gradient-blue-green {
+    background: linear-gradient(135deg, #0ea5e9 0%, #22c55e 100%);
+  }
+  
+  .text-primary {
+    @apply text-primary-600;
+  }
+  
+  .text-accent {
+    @apply text-accent-600;
+  }
+  
+  .text-beige {
+    @apply text-secondary-700;
+  }
+  
+  .bg-milk-white {
+    @apply bg-neutral-50;
+  }
+  
+  .bg-beige {
+    @apply bg-secondary-100;
+  }
+}
