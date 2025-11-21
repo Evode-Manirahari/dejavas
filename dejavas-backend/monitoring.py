@@ -1,5 +1,5 @@
 """
-Dejavas Monitoring & Observability System
+Dejava Monitoring & Observability System
 
 Production-ready monitoring with metrics, logging, health checks,
 and performance tracking for enterprise deployment.
@@ -354,7 +354,7 @@ def get_monitoring_summary() -> Dict[str, Any]:
 
 async def start_monitoring():
     """Start background monitoring tasks"""
-    logger.info("🚀 Starting Dejavas monitoring system...")
+    logger.info("🚀 Starting Dejava monitoring system...")
     
     while True:
         try:

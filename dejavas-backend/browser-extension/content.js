@@ -1,7 +1,7 @@
-// Dejavas Browser Extension - Content Script
+// Dejava Browser Extension - Content Script
 // Provides real-time market intelligence on web pages
 
-class DejavasAnalyzer {
+class DejavaAnalyzer {
     constructor() {
         this.apiBase = 'http://localhost:8000'; // Change to production URL
         this.analysisResults = null;
@@ -35,7 +35,7 @@ class DejavasAnalyzer {
         const button = document.createElement('div');
         button.id = 'dejavas-floating-button';
         button.innerHTML = '🧠';
-        button.title = 'Analyze with Dejavas';
+        button.title = 'Analyze with Dejava';
         button.style.cssText = `
             position: fixed;
             top: 20px;
@@ -85,7 +85,7 @@ class DejavasAnalyzer {
             this.showAnalysisResults(result);
             
         } catch (error) {
-            console.error('Dejavas analysis failed:', error);
+            console.error('Dejava analysis failed:', error);
             this.showError('Analysis failed. Please try again.');
         } finally {
             this.isAnalyzing = false;
@@ -109,7 +109,7 @@ class DejavasAnalyzer {
             this.showQuickAnalysis(result, text);
             
         } catch (error) {
-            console.error('Dejavas text analysis failed:', error);
+            console.error('Dejava text analysis failed:', error);
         }
     }
 
@@ -167,7 +167,7 @@ class DejavasAnalyzer {
         modal.innerHTML = `
             <div class="dejavas-modal-content">
                 <div class="dejavas-header">
-                    <h2>${scoreEmoji} Dejavas Analysis Results</h2>
+                    <h2>${scoreEmoji} Dejava Analysis Results</h2>
                     <button class="dejavas-close">&times;</button>
                 </div>
                 
@@ -484,5 +484,5 @@ class DejavasAnalyzer {
     }
 }
 
-// Initialize Dejavas analyzer
-new DejavasAnalyzer();
+// Initialize Dejava analyzer
+new DejavaAnalyzer();

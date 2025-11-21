@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Dejavas Approach Comparison Demo
+Dejava Approach Comparison Demo
 
 This script compares different LLM integration approaches:
 1. Direct LLM (Claude/Gemini) - Fast, simple
@@ -22,7 +22,7 @@ from hybrid_simulation import (
 async def compare_llm_approaches():
     """Compare different LLM approaches"""
     
-    print("🔬 Dejavas LLM Approach Comparison")
+    print("🔬 Dejava LLM Approach Comparison")
     print("=" * 60)
     
     # Sample content for testing
@@ -285,7 +285,7 @@ async def demo_hybrid_approach():
 async def main():
     """Run all comparison demos"""
     
-    print("🔬 Dejavas LLM Approach Comparison Demo")
+    print("🔬 Dejava LLM Approach Comparison Demo")
     print("=" * 70)
     
     await compare_llm_approaches()
@@ -295,7 +295,7 @@ async def main():
     print(f"\n🎯 Summary & Recommendations")
     print("=" * 70)
     print("""
-    **Best Approach for Dejavas:**
+    **Best Approach for Dejava:**
     
     1. **MVP Phase (Current)**: Direct LLM with GPT-4
        - Fast, reliable, cost-effective
@@ -313,7 +313,7 @@ async def main():
        - Advanced competitive analysis
     
     **Model Recommendations:**
-    - GPT-4: Best overall for Dejavas use case
+    - GPT-4: Best overall for Dejava use case
     - Claude-3: Excellent for strategic insights
     - Gemini Pro: Good for cost-sensitive scenarios
     

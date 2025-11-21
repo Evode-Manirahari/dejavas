@@ -1,6 +1,6 @@
-# Dejavas Backend - AI-Powered Marketing Intelligence Arena
+# Dejava Backend - AI-Powered Marketing Intelligence Arena
 
-Dejavas is a virtual "war-room" run by autonomous AI agents that simulate real market dynamics. This backend provides the core simulation engine and ubiquitous integration capabilities.
+Dejava is a virtual "war-room" run by autonomous AI agents that simulate real market dynamics. This backend provides the core simulation engine and ubiquitous integration capabilities.
 
 ## 🚀 Features
 
@@ -284,4 +284,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Dejavas** - Where AI agents battle for market truth 🚀
+**Dejava** - Where AI agents battle for market truth 🚀

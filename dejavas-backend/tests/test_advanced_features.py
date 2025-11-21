@@ -1,5 +1,5 @@
 """
-Advanced Feature Tests for Dejavas
+Advanced Feature Tests for Dejava
 
 Tests the revolutionary new features including market sentiment analysis,
 predictive analytics, competitive intelligence, and more.
@@ -20,7 +20,7 @@ from integrations import IntegrationManager, ScannedContent, ContentType
 client = TestClient(app)
 
 class TestAdvancedFeatures:
-    """Test suite for advanced Dejavas features"""
+    """Test suite for advanced Dejava features"""
     
     def setup_method(self):
         """Setup test environment"""

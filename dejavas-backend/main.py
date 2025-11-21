@@ -44,6 +44,9 @@ class ContentAnalysisRequest(BaseModel):
     text: Optional[str] = None
     integration_type: str = "browser_extension"
 
+class VoiceAnalysisRequest(BaseModel):
+    audio_data: str
+
 class IntegrationConfig(BaseModel):
     integration_type: str
     webhook_url: Optional[str] = None
@@ -52,10 +55,24 @@ class IntegrationConfig(BaseModel):
 # --- Data Storage (temporary for this step) ---
 simulations = {}
 
+
+async def _get_scanned_content(request: ContentAnalysisRequest) -> ScannedContent:
+    """Resolve either URL or text into a scanned content object."""
+    if request.url:
+        if not request.url.startswith(("http://", "https://")):
+            raise HTTPException(status_code=500, detail="Invalid URL provided")
+        return await integration_manager.scanner.scan_url(request.url)
+    if request.text:
+        return ScannedContent(
+            content_type=ContentType.MARKETING_COPY,
+            raw_text=request.text
+        )
+    raise HTTPException(status_code=400, detail="Either URL or text must be provided")
+
 # --- Endpoints ---
 @app.get("/")
 def read_root():
-    return {"message": "Welcome to Dejavas API"}
+    return {"message": "Welcome to Dejava API"}
 
 # 1. Upload Brief
 @app.post("/upload-brief/")
@@ -156,14 +173,11 @@ def rerun_simulation(session_id: str):
 async def analyze_content(request: ContentAnalysisRequest):
     """Analyze content from URLs or text - the core of ubiquitous integration"""
     try:
-        if request.url:
-            result = await integration_manager.process_content(request.url, IntegrationType.BROWSER_EXTENSION)
-        elif request.text:
-            result = await integration_manager.process_content(request.text, IntegrationType.BROWSER_EXTENSION)
-        else:
-            raise HTTPException(status_code=400, detail="Either URL or text must be provided")
-        
+        content = await _get_scanned_content(request)
+        result = await integration_manager.process_content(content, IntegrationType.BROWSER_EXTENSION)
         return result
+    except HTTPException as exc:
+        raise exc
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Analysis failed: {str(e)}")
 
@@ -199,16 +213,7 @@ def register_integration(config: IntegrationConfig):
 async def advanced_analysis(request: ContentAnalysisRequest):
     """Advanced AI-powered analysis with market context and competitive intelligence"""
     try:
-        # Create a comprehensive brief from the content
-        if request.url:
-            scanned_content = await integration_manager.scanner.scan_url(request.url)
-        elif request.text:
-            scanned_content = ScannedContent(
-                content_type=ContentType.MARKETING_COPY,
-                raw_text=request.text
-            )
-        else:
-            raise HTTPException(status_code=400, detail="Either URL or text must be provided")
+        scanned_content = await _get_scanned_content(request)
         
         # Create market context
         market_context = {
@@ -246,7 +251,8 @@ async def advanced_analysis(request: ContentAnalysisRequest):
         }
         
         return result
-        
+    except HTTPException as exc:
+        raise exc
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Advanced analysis failed: {str(e)}")
 
@@ -284,16 +290,7 @@ def health_check():
 async def analyze_market_sentiment(request: ContentAnalysisRequest):
     """Real-time market sentiment analysis with social media integration"""
     try:
-        # Create market context from content
-        if request.url:
-            scanned_content = await integration_manager.scanner.scan_url(request.url)
-        elif request.text:
-            scanned_content = ScannedContent(
-                content_type=ContentType.MARKETING_COPY,
-                raw_text=request.text
-            )
-        else:
-            raise HTTPException(status_code=400, detail="Either URL or text must be provided")
+        scanned_content = await _get_scanned_content(request)
         
         # Analyze market sentiment using multiple data sources
         sentiment_data = await integration_manager.analyze_market_sentiment(scanned_content)
@@ -309,6 +306,8 @@ async def analyze_market_sentiment(request: ContentAnalysisRequest):
             "real_time": True
         }
         
+    except HTTPException as exc:
+        raise exc
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Market sentiment analysis failed: {str(e)}")
 
@@ -317,16 +316,7 @@ async def analyze_market_sentiment(request: ContentAnalysisRequest):
 async def get_predictive_analytics(request: ContentAnalysisRequest):
     """AI-powered predictive analytics for market trends and adoption"""
     try:
-        # Create brief from content
-        if request.url:
-            scanned_content = await integration_manager.scanner.scan_url(request.url)
-        elif request.text:
-            scanned_content = ScannedContent(
-                content_type=ContentType.MARKETING_COPY,
-                raw_text=request.text
-            )
-        else:
-            raise HTTPException(status_code=400, detail="Either URL or text must be provided")
+        scanned_content = await _get_scanned_content(request)
         
         brief = integration_manager._create_brief_from_content(scanned_content)
         
@@ -344,6 +334,8 @@ async def get_predictive_analytics(request: ContentAnalysisRequest):
             "prediction_horizon": "6-12 months"
         }
         
+    except HTTPException as exc:
+        raise exc
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Predictive analytics failed: {str(e)}")
 
@@ -352,16 +344,7 @@ async def get_predictive_analytics(request: ContentAnalysisRequest):
 async def get_competitive_intelligence(request: ContentAnalysisRequest):
     """Comprehensive competitive intelligence with AI analysis"""
     try:
-        # Analyze content for competitive insights
-        if request.url:
-            scanned_content = await integration_manager.scanner.scan_url(request.url)
-        elif request.text:
-            scanned_content = ScannedContent(
-                content_type=ContentType.MARKETING_COPY,
-                raw_text=request.text
-            )
-        else:
-            raise HTTPException(status_code=400, detail="Either URL or text must be provided")
+        scanned_content = await _get_scanned_content(request)
         
         # Generate competitive intelligence
         competitive_data = await integration_manager.generate_competitive_intelligence(scanned_content)
@@ -377,16 +360,18 @@ async def get_competitive_intelligence(request: ContentAnalysisRequest):
             "analysis_depth": "comprehensive"
         }
         
+    except HTTPException as exc:
+        raise exc
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Competitive intelligence failed: {str(e)}")
 
 # 14. Voice-Enabled Market Analysis
 @app.post("/voice-analysis/")
-async def analyze_voice_input(audio_data: str):
+async def analyze_voice_input(request: VoiceAnalysisRequest):
     """Voice-enabled market analysis using speech-to-text and AI"""
     try:
         # Convert voice to text (placeholder for actual STT integration)
-        transcribed_text = f"Voice input: {audio_data}"
+        transcribed_text = f"Voice input: {request.audio_data}"
         
         # Analyze the transcribed content
         content = ScannedContent(
@@ -404,6 +389,8 @@ async def analyze_voice_input(audio_data: str):
             "voice_enabled": True
         }
         
+    except HTTPException as exc:
+        raise exc
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Voice analysis failed: {str(e)}")
 
@@ -412,15 +399,7 @@ async def analyze_voice_input(audio_data: str):
 async def analyze_multilingual_content(request: ContentAnalysisRequest, language: str = "auto"):
     """Multi-language market intelligence with automatic translation"""
     try:
-        if request.url:
-            scanned_content = await integration_manager.scanner.scan_url(request.url)
-        elif request.text:
-            scanned_content = ScannedContent(
-                content_type=ContentType.MARKETING_COPY,
-                raw_text=request.text
-            )
-        else:
-            raise HTTPException(status_code=400, detail="Either URL or text must be provided")
+        scanned_content = await _get_scanned_content(request)
         
         # Detect language if auto
         if language == "auto":
@@ -442,6 +421,8 @@ async def analyze_multilingual_content(request: ContentAnalysisRequest, language
             "ai_powered": True
         }
         
+    except HTTPException as exc:
+        raise exc
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Multilingual analysis failed: {str(e)}")
 
@@ -462,6 +443,8 @@ async def setup_market_alerts(alert_config: Dict[str, Any]):
             "ai_powered": True
         }
         
+    except HTTPException as exc:
+        raise exc
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Market alert setup failed: {str(e)}")
 
@@ -484,6 +467,8 @@ async def market_research_query(query: str, research_depth: str = "standard"):
             "research_quality": "expert"
         }
         
+    except HTTPException as exc:
+        raise exc
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Market research failed: {str(e)}")
 
@@ -492,15 +477,7 @@ async def market_research_query(query: str, research_depth: str = "standard"):
 async def analyze_pricing_strategy(request: ContentAnalysisRequest):
     """AI-powered pricing intelligence and optimization recommendations"""
     try:
-        if request.url:
-            scanned_content = await integration_manager.scanner.scan_url(request.url)
-        elif request.text:
-            scanned_content = ScannedContent(
-                content_type=ContentType.MARKETING_COPY,
-                raw_text=request.text
-            )
-        else:
-            raise HTTPException(status_code=400, detail="Either URL or text must be provided")
+        scanned_content = await _get_scanned_content(request)
         
         pricing_analysis = await integration_manager.analyze_pricing_strategy(scanned_content)
         
@@ -514,6 +491,8 @@ async def analyze_pricing_strategy(request: ContentAnalysisRequest):
             "pricing_intelligence": "advanced"
         }
         
+    except HTTPException as exc:
+        raise exc
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Pricing intelligence failed: {str(e)}")
 

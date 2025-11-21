@@ -1,5 +1,5 @@
 """
-Dejavas LLM Integration - Real AI Intelligence for Agents
+Dejava LLM Integration - Real AI Intelligence for Agents
 
 This module provides the core LLM integration that powers the AI agents
 with real intelligence, enabling sophisticated market analysis and
@@ -547,7 +547,7 @@ class EnhancedMockAI:
         return recommendations
 
 class LLMIntegration:
-    """Core LLM integration for Dejavas agents"""
+    """Core LLM integration for Dejava agents"""
     
     def __init__(self, api_key: Optional[str] = None):
         self.api_key = api_key or os.getenv("OPENAI_API_KEY")
@@ -623,7 +623,7 @@ class LLMIntegration:
         }
         
         prompt = f"""
-You are an AI agent in the Dejavas marketing intelligence simulation. 
+You are an AI agent in the Dejava marketing intelligence simulation. 
 
 {role_descriptions[context.role]}
 

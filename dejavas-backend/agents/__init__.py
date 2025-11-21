@@ -1,5 +1,5 @@
 """
-Dejavas Agent System - Deep Persona DNA Implementation
+Dejava Agent System - Deep Persona DNA Implementation
 
 This module implements the core agent system with "genome" profiles that define
 each agent's demographics, psychographics, and behavioral patterns.

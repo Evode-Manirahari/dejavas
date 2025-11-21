@@ -1,5 +1,5 @@
 """
-Dejavas Simulation Engine - Advanced Market Intelligence
+Dejava Simulation Engine - Advanced Market Intelligence
 
 This module implements the core simulation engine with influence graphs,
 evolving rounds, and arena health metrics.
@@ -166,6 +166,7 @@ class AdvancedSimulator:
         self.influence_graph = InfluenceGraph(network_topology)
         self.health_metrics = ArenaHealthMetrics()
         self.round_history = []
+        self.agents = {}
         
     def create_agent_population(self, config: Dict[str, int]) -> List[Agent]:
         """Create a population of agents based on configuration"""
@@ -198,6 +199,7 @@ class AdvancedSimulator:
         """Run the complete simulation with multiple rounds using real AI intelligence"""
         # Create agent population
         agents = self.create_agent_population(config)
+        self.agents = {agent.name: agent for agent in agents}
         self.influence_graph.add_agents(agents)
         
         # Initialize round history

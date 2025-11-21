@@ -1,5 +1,5 @@
 """
-Dejavas Hybrid Simulation System
+Dejava Hybrid Simulation System
 
 This module implements a hybrid approach combining:
 1. Direct LLM for fast content analysis

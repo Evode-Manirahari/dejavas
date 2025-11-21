@@ -1,7 +1,7 @@
 """
-Dejavas Ubiquitous Integration System
+Dejava Ubiquitous Integration System
 
-This module enables Dejavas to be integrated everywhere - like Grammarly.
+This module enables Dejava to be integrated everywhere - like Grammarly.
 It provides browser extensions, API integrations, and real-time scanning
 capabilities for seamless market intelligence.
 """
@@ -36,7 +36,7 @@ class ContentType(Enum):
 
 @dataclass
 class ScannedContent:
-    """Represents content that has been scanned by Dejavas"""
+    """Represents content that has been scanned by Dejava"""
     content_type: ContentType
     url: Optional[str] = None
     title: Optional[str] = None
@@ -222,7 +222,7 @@ class IntegrationManager:
             'internal_team_percentage': 10
         }
         
-        simulation_result = simulator.run_simulation(brief, config, num_rounds=3)
+        simulation_result = await simulator.run_simulation(brief, config, num_rounds=3)
         
         # Format response based on integration type
         return self._format_response(simulation_result, integration_type, scanned_content)
@@ -328,7 +328,7 @@ class IntegrationManager:
         score = simulation_result['adoption_score']
         emoji = "🚀" if score >= 70 else "⚠️" if score >= 50 else "🔴"
         
-        message = f"{emoji} **Dejavas Analysis Results**\n\n"
+        message = f"{emoji} **Dejava Analysis Results**\n\n"
         message += f"**Adoption Score:** {score:.1f}%\n\n"
         
         if simulation_result['top_objections']:

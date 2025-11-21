@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  # Dejavas Backend API
+  # Dejava Backend API
   dejavas-backend:
     build: .
     container_name: dejavas-backend

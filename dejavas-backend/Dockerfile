@@ -1,4 +1,4 @@
-# Multi-stage Docker build for Dejavas Backend
+# Multi-stage Docker build for Dejava Backend
 FROM python:3.11-slim as builder
 
 # Set environment variables

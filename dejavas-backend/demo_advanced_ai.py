@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Dejavas Advanced AI Demo
+Dejava Advanced AI Demo
 
-This script demonstrates the enhanced AI capabilities of Dejavas,
+This script demonstrates the enhanced AI capabilities of Dejava,
 including real LLM integration, advanced agent behavior, and
 sophisticated market intelligence.
 """
@@ -17,7 +17,7 @@ from llm_integration import llm_integration, AgentContext, AgentRole
 
 async def demo_advanced_agents():
     """Demo the advanced AI agent capabilities"""
-    print("🧠 Dejavas Advanced AI Demo")
+    print("🧠 Dejava Advanced AI Demo")
     print("=" * 50)
     
     # Create a sample product brief
@@ -224,7 +224,7 @@ async def demo_competitive_analysis():
 
 async def main():
     """Run all demos"""
-    print("🚀 Dejavas Advanced AI Capabilities Demo")
+    print("🚀 Dejava Advanced AI Capabilities Demo")
     print("=" * 60)
     
     # Check LLM availability
@@ -241,7 +241,7 @@ async def main():
     
     print(f"\n🎉 Demo Complete!")
     print("=" * 60)
-    print("This demonstrates the advanced AI capabilities of Dejavas:")
+    print("This demonstrates the advanced AI capabilities of Dejava:")
     print("• Real LLM-powered agent intelligence")
     print("• Sophisticated market analysis")
     print("• Competitive intelligence")

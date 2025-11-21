@@ -1,215 +1,110 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Brain, 
-  BarChart3, 
-  Users, 
-  Mail, 
-  Calendar, 
-  Settings,
-  CheckCircle
-} from 'lucide-react';
-import { VoiceInterface } from './VoiceInterface';
-import { SimulationPanel } from './SimulationPanel';
-import { AgentManagement } from './AgentManagement';
-import { EmailIntegration } from './EmailIntegration';
-import { CalendarIntegration } from './CalendarIntegration';
-import { RealTimeMetrics } from './RealTimeMetrics';
-import { ColorPreview } from './ColorPreview';
-import { emailApi, calendarApi } from '../services/api';
-import { SimulationResult, EmailMessage, CalendarEvent } from '../types';
+import React, { useState } from 'react';
+
+type Message = {
+  id: number;
+  role: 'user' | 'tutor';
+  content: string;
+  timestamp: string;
+};
+
+const initialMessages: Message[] = [
+  {
+    id: 1,
+    role: 'tutor',
+    content: 'How can I help?',
+    timestamp: '09:00',
+  },
+];
 
 export const Dashboard: React.FC = () => {
-  const [activeTab, setActiveTab] = useState('simulation');
-  const [simulationResults, setSimulationResults] = useState<SimulationResult[]>([]);
-  const [emails, setEmails] = useState<EmailMessage[]>([]);
-  const [events, setEvents] = useState<CalendarEvent[]>([]);
+  const [messages, setMessages] = useState<Message[]>(initialMessages);
+  const [input, setInput] = useState('');
 
-  useEffect(() => {
-    loadInitialData();
-  }, []);
+  const handleSend = () => {
+    if (!input.trim()) return;
 
-  const loadInitialData = async () => {
-    try {
-      const [emailsData, eventsData] = await Promise.all([
-        emailApi.getUnreadEmails(),
-        calendarApi.getTodayEvents(),
-      ]);
-      setEmails(emailsData);
-      setEvents(eventsData);
-    } catch (error) {
-      console.error('Failed to load initial data:', error);
+    const userMessage: Message = {
+      id: Date.now(),
+      role: 'user',
+      content: input.trim(),
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    };
+
+    const tutorMessage: Message = {
+      id: Date.now() + 1,
+      role: 'tutor',
+      content:
+        'Thanks for articulating that. I’ll log it, update the rubric, and suggest a visualization when it helps. Ready for a spatial walkthrough?',
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    };
+
+    setMessages((prev) => [...prev, userMessage, tutorMessage]);
+    setInput('');
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      handleSend();
     }
   };
 
-  const handleStartSimulation = () => {
-    setActiveTab('simulation');
-  };
-
-  const handleAnalyzeContent = () => {
-    setActiveTab('simulation');
-  };
-
-  const handleReadEmails = () => {
-    setActiveTab('emails');
-  };
-
-  const handleReadSchedule = () => {
-    setActiveTab('calendar');
-  };
-
-  const handleAddEvent = () => {
-    setActiveTab('calendar');
-  };
-
-  const handleShowHelp = () => {
-    // Show help modal or navigate to help section
-    alert('Voice Commands Help:\n\n• "Start simulation" - Run AI simulation\n• "Analyze content" - Analyze current content\n• "Read emails" - Read unread emails\n• "Read schedule" - Read today\'s schedule\n• "Add event" - Add calendar event\n• "Stop listening" - Turn off voice');
-  };
-
-  const tabs = [
-    { id: 'simulation', label: 'Simulation', icon: Brain },
-    { id: 'agents', label: 'Agents', icon: Users },
-    { id: 'emails', label: 'Emails', icon: Mail },
-    { id: 'calendar', label: 'Calendar', icon: Calendar },
-    { id: 'metrics', label: 'Metrics', icon: BarChart3 },
-    { id: 'colors', label: 'Colors', icon: Settings },
-  ];
-
   return (
-    <div className="min-h-screen bg-milk-white">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b border-secondary-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-3">
-              <div className="gradient-blue-green p-2 rounded-lg">
-                <Brain className="w-8 h-8 text-white" />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-neutral-800">Dejavas</h1>
-                <p className="text-sm text-beige">AI Marketing Intelligence Arena</p>
-              </div>
-            </div>
-            
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2 text-sm text-beige">
-                <div className="w-2 h-2 bg-accent-500 rounded-full animate-pulse" />
-                <span>System Online</span>
-              </div>
-              <Settings className="w-5 h-5 text-secondary-400 hover:text-primary-600 cursor-pointer" />
-            </div>
+    <div className="flex min-h-screen flex-col bg-neutral-50 text-neutral-900">
+      <header className="border-b border-neutral-200 bg-white">
+        <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-4">
+          <div>
+            <p className="text-xs uppercase tracking-[0.4em] text-neutral-500">DEJAVA</p>
+            <h1 className="text-lg font-semibold text-neutral-900">Dejava</h1>
           </div>
+          <p className="text-sm text-neutral-500">Simple, grounded conversations.</p>
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
-            <div className="card">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">Voice Control</h2>
-              <VoiceInterface
-                onStartSimulation={handleStartSimulation}
-                onAnalyzeContent={handleAnalyzeContent}
-                onReadEmails={handleReadEmails}
-                onReadSchedule={handleReadSchedule}
-                onAddEvent={handleAddEvent}
-                onShowHelp={handleShowHelp}
-              />
-            </div>
-
-            {/* Quick Stats */}
-            <div className="card mt-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Stats</h3>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Active Simulations</span>
-                  <span className="text-sm font-medium text-primary-600">3</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Unread Emails</span>
-                  <span className="text-sm font-medium text-red-600">{emails.length}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Today's Events</span>
-                  <span className="text-sm font-medium text-blue-600">{events.length}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">System Health</span>
-                  <div className="flex items-center space-x-1">
-                    <CheckCircle className="w-4 h-4 text-green-500" />
-                    <span className="text-sm font-medium text-green-600">Healthy</span>
-                  </div>
-                </div>
+      <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-6 px-4 py-8">
+        <section className="flex-1 space-y-6 rounded-2xl border border-neutral-200 bg-white p-6">
+          {messages.map((message) => (
+            <div key={message.id} className="flex flex-col gap-1">
+              <div
+                className={`max-w-3xl rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+                  message.role === 'user'
+                    ? 'self-end bg-neutral-100 text-neutral-900'
+                    : 'bg-neutral-900 text-white'
+                }`}
+              >
+                {message.content}
               </div>
+              <span className="text-xs text-neutral-500">
+                {message.role === 'user' ? 'You · ' : 'Dejava · '}
+                {message.timestamp}
+              </span>
             </div>
-          </div>
+          ))}
+        </section>
 
-          {/* Main Content */}
-          <div className="lg:col-span-3">
-            {/* Tab Navigation */}
-            <div className="bg-white rounded-lg shadow-sm border border-secondary-200 mb-6">
-              <nav className="flex space-x-8 px-6">
-                {tabs.map((tab) => {
-                  const Icon = tab.icon;
-                  return (
-                    <button
-                      key={tab.id}
-                      onClick={() => setActiveTab(tab.id)}
-                      className={`flex items-center space-x-2 py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200 ${
-                        activeTab === tab.id
-                          ? 'border-primary-500 text-primary-600'
-                          : 'border-transparent text-beige hover:text-primary-700 hover:border-secondary-300'
-                      }`}
-                    >
-                      <Icon className="w-5 h-5" />
-                      <span>{tab.label}</span>
-                    </button>
-                  );
-                })}
-              </nav>
-            </div>
-
-            {/* Tab Content */}
-            <div className="space-y-6">
-              {activeTab === 'simulation' && (
-                <SimulationPanel 
-                  results={simulationResults}
-                  onResultsUpdate={setSimulationResults}
-                />
-              )}
-              
-              {activeTab === 'agents' && (
-                <AgentManagement />
-              )}
-              
-              {activeTab === 'emails' && (
-                <EmailIntegration 
-                  emails={emails}
-                  onEmailsUpdate={setEmails}
-                />
-              )}
-              
-              {activeTab === 'calendar' && (
-                <CalendarIntegration 
-                  events={events}
-                  onEventsUpdate={setEvents}
-                />
-              )}
-              
-              {activeTab === 'metrics' && (
-                <RealTimeMetrics 
-                  simulationResults={simulationResults}
-                />
-              )}
-              
-              {activeTab === 'colors' && (
-                <ColorPreview />
-              )}
-            </div>
+        <section className="rounded-2xl border border-neutral-200 bg-white p-4">
+          <label htmlFor="user-input" className="sr-only">
+            Ask Dejava anything
+          </label>
+          <textarea
+            id="user-input"
+            value={input}
+            onChange={(event) => setInput(event.target.value)}
+            onKeyDown={handleKeyDown}
+            rows={4}
+            placeholder="Ask a question or describe what feels confusing…"
+            className="w-full resize-none border-0 bg-transparent text-sm text-neutral-900 outline-none placeholder:text-neutral-400"
+          />
+          <div className="mt-4 border-t border-neutral-100 pt-4 text-right">
+            <button
+              onClick={handleSend}
+              className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-neutral-800"
+            >
+              Send
+            </button>
           </div>
-        </div>
-      </div>
+        </section>
+      </main>
     </div>
   );
 };

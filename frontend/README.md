@@ -1,34 +1,22 @@
-# Dejavas Frontend - AI Marketing Intelligence Dashboard
+# Dejava Frontend – Reality-Anchored AI Tutor
 
-A modern, voice-enabled React frontend for the Dejavas AI marketing intelligence platform. This application provides a comprehensive dashboard for managing AI agents, running simulations, and integrating with email and calendar systems.
+A Claude/GPT-inspired interface for Dejava, the AI tutor that “shows instead of tells.” The UI focuses on clarity: a single conversation column, persistent reality anchors, and a humane-rubric sidebar to keep every interaction grounded and accountable.
 
-## 🚀 Features
+## ✨ What’s Inside
 
-### Core Features
-- **Voice Interface**: Hands-free voice commands for all major functions
-- **Simulation Management**: Upload briefs, configure agents, and run AI simulations
-- **Agent Management**: Create, configure, and monitor AI agents with deep persona DNA
-- **Email Integration**: Read, summarize, and respond to emails using voice commands
-- **Calendar Management**: View schedule, add events, and get voice reminders
-- **Real-time Metrics**: Live monitoring of simulation performance and system health
+- **Conversation-first layout** – Minimal bubbles, timestamps, and no visual clutter.
+- **Reality anchor rail** – Decision briefs, query tallies, and reflection prompts stay visible as you type.
+- **Humane rubric snapshot** – Seven-dimension scores (spatial intelligence, cognitive autonomy, etc.) update per interaction.
+- **Visualization controls** – Dedicated card for Manim scenes, practice queues, and when to “show instead of tell.”
+- **Neutral aesthetic** – Accessible typography, generous whitespace, no gradients, emojis, or gamified widgets.
 
-### Voice Commands
-- "Start simulation" - Run AI simulation
-- "Analyze content" - Analyze current content
-- "Read emails" - Summarize unread emails
-- "Read schedule" - Read today's schedule
-- "Add event" - Create calendar event
-- "Stop listening" - Turn off voice recognition
+## 🛠️ Stack
 
-## 🛠️ Tech Stack
-
-- **React 18** with TypeScript
-- **Vite** for fast development and building
-- **Tailwind CSS** for styling
-- **Framer Motion** for animations
-- **Recharts** for data visualization
-- **Web Speech API** for voice recognition and synthesis
-- **Axios** for API communication
+- React 18 + TypeScript
+- Vite dev server
+- Tailwind CSS (utility-first styling)
+- react-hot-toast (optional notifications)
+- lucide-react icons (used sparingly for clarity)
 
 ## 🚀 Quick Start
 
@@ -65,23 +53,11 @@ npm run preview
 ```
 frontend/
 ├── src/
-│   ├── components/          # React components
-│   │   ├── Dashboard.tsx    # Main dashboard
-│   │   ├── VoiceInterface.tsx # Voice controls
-│   │   ├── SimulationPanel.tsx # Simulation management
-│   │   ├── AgentManagement.tsx # Agent configuration
-│   │   ├── EmailIntegration.tsx # Email features
-│   │   ├── CalendarIntegration.tsx # Calendar features
-│   │   └── RealTimeMetrics.tsx # Metrics dashboard
-│   ├── hooks/              # Custom React hooks
-│   │   └── useVoice.ts     # Voice recognition hook
-│   ├── services/           # API services
-│   │   └── api.ts          # Backend API integration
-│   ├── types/              # TypeScript type definitions
-│   │   └── index.ts        # Shared types
-│   ├── App.tsx             # Main app component
-│   ├── main.tsx            # App entry point
-│   └── index.css           # Global styles
+│   ├── components/
+│   │   └── Dashboard.tsx   # Chat-style tutor interface
+│   ├── App.tsx             # Mounts dashboard + toaster
+│   ├── main.tsx            # Entry point
+│   └── index.css           # Global styles + utilities
 ├── public/                 # Static assets
 ├── package.json            # Dependencies and scripts
 ├── vite.config.ts          # Vite configuration
@@ -89,126 +65,21 @@ frontend/
 └── tsconfig.json           # TypeScript config
 ```
 
-## 🎯 Key Components
+## 💡 Design Principles
 
-### Dashboard
-The main interface with tabbed navigation for different features:
-- Simulation controls and results
-- Agent management
-- Email integration
-- Calendar management
-- Real-time metrics
+1. **Clarity over spectacle** – Just text, whitespace, and the data learners need.
+2. **Transparency by default** – Decision briefs, query tallies, and reminders about AI limits are never hidden.
+3. **Human-first** – Reflection prompts and “connect with a human” cues keep autonomy intact.
+4. **Opt-in visualization** – Spatial scenes launch only when they add value.
 
-### Voice Interface
-Advanced voice recognition with:
-- Wake word detection
-- Natural language command processing
-- Text-to-speech responses
-- Command confirmation
-
-### Simulation Panel
-Complete simulation workflow:
-- Product brief upload
-- Agent configuration
-- Simulation execution
-- Results visualization
-- Content analysis
-
-### Agent Management
-Deep persona DNA system:
-- Agent creation and editing
-- Demographics configuration
-- Psychographics profiling
-- Personality trait assignment
-- Influence scoring
-
-## 🔧 Configuration
-
-### Environment Variables
-Create a `.env.local` file in the frontend directory:
+## 🧪 Testing & Deployment
 
 ```bash
-VITE_API_BASE_URL=http://localhost:8000
-VITE_VOICE_ENABLED=true
-VITE_ANALYTICS_ENABLED=false
-```
-
-### API Integration
-The frontend connects to the FastAPI backend through:
-- `/api/simulation/*` - Simulation endpoints
-- `/api/analyze-content` - Content analysis
-- `/api/extension/*` - Browser extension APIs
-
-## 🎨 Styling
-
-The application uses Tailwind CSS with a custom design system:
-- **Primary Colors**: Blue gradient theme
-- **Secondary Colors**: Purple accent colors
-- **Components**: Reusable button, card, and input styles
-- **Animations**: Smooth transitions and micro-interactions
-
-## 📱 Responsive Design
-
-The interface is fully responsive with:
-- Mobile-first design approach
-- Adaptive layouts for different screen sizes
-- Touch-friendly controls
-- Optimized voice interface for mobile
-
-## 🔒 Security
-
-- API calls are proxied through Vite dev server
-- Voice data is processed locally (no external services)
-- Secure authentication with backend
-- Input validation and sanitization
-
-## 🧪 Testing
-
-```bash
-# Run linting
-npm run lint
-
-# Type checking
-npx tsc --noEmit
-```
-
-## 🚀 Deployment
-
-### Build for Production
-```bash
+# Type check + build
 npm run build
+
+# Optional preview
+npm run preview
 ```
 
-### Deploy to Vercel
-```bash
-npx vercel --prod
-```
-
-### Deploy to Netlify
-```bash
-npm run build
-# Upload dist/ folder to Netlify
-```
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
-## 🆘 Support
-
-For support and questions:
-- Check the documentation
-- Open an issue on GitHub
-- Contact the development team
-
----
-
-**Dejavas Frontend** - Where AI meets intuitive design 🚀
+Deploy the contents of `dist/` to any static host (Vercel, Netlify, S3 + CloudFront, etc.). README updates will stay in sync as we expand the tutor experience.
